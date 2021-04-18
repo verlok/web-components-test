@@ -46,9 +46,9 @@ class VrkRandomQuote extends HTMLElement {
   }
   _render() {
     if (this._quoteEl) {
-      this._quoteEl.innerHTML = this._quotes[
-        Math.floor(Math.random() * this._quotes.length)
-      ];
+      const currentIndex = Math.floor(Math.random() * this._quotes.length);
+      this.setAttribute("current-index", currentIndex);
+      this._quoteEl.innerHTML = this._quotes[currentIndex];
     }
   }
   _setInterval(value) {
