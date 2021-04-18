@@ -41,9 +41,7 @@ class VrkRandomQuote extends HTMLElement {
       </div>
     `;
     this._quoteEl = this.querySelector("#quote");
-    this._interval = setInterval(() => {
-      this._render;
-    }, 10000);
+    this._setInterval(this.getAttribute("interval"));
     this._render();
   }
   _render() {
@@ -51,6 +49,16 @@ class VrkRandomQuote extends HTMLElement {
       this._quoteEl.innerHTML = this._quotes[
         Math.floor(Math.random() * this._quotes.length)
       ];
+    }
+  }
+  _setInterval(value) {
+    if (this._interval) {
+      clearInterval(this._interval);
+    }
+    if (value) {
+      this._interval = setInterval(() => {
+        this._render();
+      }, value * 1000);
     }
   }
   disconnectedCallback() {
