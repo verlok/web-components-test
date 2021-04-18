@@ -3,7 +3,7 @@ class VrkRandomQuote extends HTMLElement {
     super();
     this._quotes = [
       "Cane canuto / sempre piaciuto (Rohypnol)",
-      "La buzza è una bazza",
+      "La bazza della buzza è che non si guzza",
       "La guerra di Piero / che mangia le pere / sotto il pero / tutte le sere",
       "Custom elements are just a fancy way to avoid jQuery $this",
       "yPack rules"
