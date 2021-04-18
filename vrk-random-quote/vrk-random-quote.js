@@ -6,7 +6,10 @@ class VrkRandomQuote extends HTMLElement {
       "La bazza della buzza è che non si guzza",
       "La guerra di Piero / che mangia le pere / sotto il pero / tutte le sere",
       "Custom elements are just a fancy way to avoid jQuery $this",
-      "yPack rules"
+      "yPack rules",
+      "I started working with computers before you, Jackie Weaver!",
+      "Why don't we use Amamakai?",
+      "Everything is directly collegated"
     ];
     this._quoteEl = null;
     this._interval = null;
