@@ -2,10 +2,7 @@ class VrkPoll extends HTMLElement {
   constructor() {
     super();
     this._attached = false;
-    this._data = {
-      question: "What is the meaning of life, the universe and everything?",
-      answers: ["Twenty-four", "Fourty-two"]
-    };
+    this._data = null;
     this._selected = null;
 
     // DOM Elements
@@ -18,7 +15,7 @@ class VrkPoll extends HTMLElement {
       <style>
         h3 { background: #333; color: white; font-weight: bold; margin: 0 }
         ul, li { margin: 0; list-style-type: none; padding: 0 }
-        li, h3 { padding: 1rem; }
+        li, h3:not(:empty) { padding: 1rem; }
         li { background: #CCC; border: 1px solid #999; cursor: pointer; }
         .selected { background: darkgreen; color: white; }
       </style>
@@ -31,10 +28,8 @@ class VrkPoll extends HTMLElement {
     this._$answers = this.querySelector("#answers");
     this._$answers.addEventListener("click", (event) => {
       this._$answers.querySelectorAll("li").forEach(($li, index) => {
-        $li.classList.remove("selected");
         if ($li === event.target) {
-          this._selected = index;
-          $li.classList.add("selected");
+          this.selected = index;
         }
       });
     });
@@ -49,6 +44,27 @@ class VrkPoll extends HTMLElement {
         ""
       );
     }
+  }
+  set data(data) {
+    if (this._data === data) return;
+    this._data = data;
+    this._render();
+  }
+  get data() {
+    return this._data;
+  }
+  set selected(indexToSelect) {
+    const $answers = this._$answers.querySelectorAll("li");
+    if ($answers.length === 0) return;
+    if (indexToSelect < 0 || indexToSelect > $answers.length - 1) return;
+    $answers.forEach(($li, index) => {
+      const fn = index === indexToSelect ? "add" : "remove";
+      $li.classList[fn]("selected");
+    });
+    this._selected = indexToSelect;
+  }
+  get selected() {
+    return this._selected;
   }
 }
 

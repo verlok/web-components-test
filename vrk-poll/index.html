@@ -8,6 +8,15 @@
   </head>
   <body>
     <vrk-poll></vrk-poll>
+    <h2>How to test this component</h2>
+    <p>In the browser console, do:</p>
+    <pre>
+$poll = document.querySelector ("vrk-poll")
+$poll.data = {question: "Cane canuto?", answers: ["Sempre piaciuto", "Sempre dispiaciuto", "Ma saran cazzi miei?", "Sono Lillo!"]};
+$poll.data;
+$poll.selected = 2;
+$poll.selected;
+    </pre>
   </body>
   <script src="./vrk-poll.js"></script>
 </html>
