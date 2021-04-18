@@ -61,6 +61,12 @@ class VrkRandomQuote extends HTMLElement {
       }, value * 1000);
     }
   }
+  static get observedAttributes() {
+    return ["interval"];
+  }
+  attributeChangedCallback(name, oldValue, newValue) {
+    this._setInterval(newValue);
+  }
   disconnectedCallback() {
     clearInterval(this._interval);
   }
