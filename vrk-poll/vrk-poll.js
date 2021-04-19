@@ -8,10 +8,13 @@ class VrkPoll extends HTMLElement {
     // DOM Elements
     this._$question = null;
     this._$answers = null;
+
+    // Shadows
+    this._root = this.attachShadow({ mode: "open" });
   }
   connectedCallback() {
     this._attached = true;
-    this.innerHTML = /*html*/ `
+    this._root.innerHTML = /*html*/ `
       <style>
         h3 { background: #333; color: white; font-weight: bold; margin: 0 }
         ul, li { margin: 0; list-style-type: none; padding: 0 }
@@ -24,8 +27,8 @@ class VrkPoll extends HTMLElement {
         <ul id="answers"></ul>
       </div>
     `;
-    this._$question = this.querySelector("#question");
-    this._$answers = this.querySelector("#answers");
+    this._$question = this._root.querySelector("#question");
+    this._$answers = this._root.querySelector("#answers");
     this._$answers.addEventListener("click", (event) => {
       this._$answers.querySelectorAll("li").forEach(($li, index) => {
         if ($li === event.target) {
