@@ -71,6 +71,16 @@ class VrkStarRating extends HTMLElement {
       </div>
     `;
     this._$top = this._root.querySelector(".top");
+    this._$bottom = this._root.querySelector(".bottom");
+    this._$bottom.addEventListener("click", (event) => {
+      if (this._disabled) return;
+      const $clicked = event.target;
+      const clickedValue = parseInt($clicked.dataset.value);
+      if (!clickedValue) return;
+      if (this._value === clickedValue) return;
+      this.dispatchEvent(new Event("change"));
+      this.value = clickedValue;
+    });
   }
   _render() {
     if (this._$top) {
