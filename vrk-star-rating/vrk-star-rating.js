@@ -8,9 +8,11 @@ class VrkStarRating extends HTMLElement {
     this._$bottom = null;
     // Private props
     this._value = 0;
+    this._disabled = null;
+    this._touched = false;
   }
   connectedCallback() {
-    this._attached = true;
+    // HTML & CSS
     this._root.innerHTML = /*html*/ `
       <style>
         :host {
@@ -70,8 +72,10 @@ class VrkStarRating extends HTMLElement {
         </div>
       </div>
     `;
+    // Elements cache
     this._$top = this._root.querySelector(".top");
     this._$bottom = this._root.querySelector(".bottom");
+    // Click listener
     this._$bottom.addEventListener("click", (event) => {
       if (this._disabled) return;
       const $clicked = event.target;
@@ -81,6 +85,12 @@ class VrkStarRating extends HTMLElement {
       this.dispatchEvent(new Event("change"));
       this.value = clickedValue;
     });
+    // Set initial value
+    const initialValue = this.getAttribute("value");
+    if (initialValue) {
+      this._value = initialValue;
+      this._render();
+    }
   }
   _render() {
     if (this._$top) {
@@ -91,10 +101,28 @@ class VrkStarRating extends HTMLElement {
     if (this._value === value) return;
     if (value < 1 || value > 5) return;
     this._value = value;
+    this._touched = true;
     this._render();
   }
   get value() {
     return this._value;
+  }
+  static get observedAttributes() {
+    return ["disabled", "value"];
+  }
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    switch (name) {
+      case "disabled":
+        this._disabled = newValue !== null;
+        break;
+      case "value":
+        if (!this._touched) {
+          this._value = newValue;
+          this._render();
+        }
+        break;
+    }
   }
 }
 
