@@ -6,7 +6,8 @@ class VrkStarRating extends HTMLElement {
     // Elements
     this._$top = null;
     this._$bottom = null;
-    this._value = null;
+    // Private props
+    this._value = 0;
   }
   connectedCallback() {
     this._attached = true;
@@ -69,16 +70,22 @@ class VrkStarRating extends HTMLElement {
         </div>
       </div>
     `;
+    this._$top = this._root.querySelector(".top");
   }
-
-  /*
+  _render() {
+    if (this._$top) {
+      this._$top.style.width = `${this._value * 10 * 2}%`;
+    }
+  }
   set value(value) {
+    if (this._value === value) return;
+    if (value < 1 || value > 5) return;
     this._value = value;
+    this._render();
   }
   get value() {
     return this._value;
-  } 
-  */
+  }
 }
 
 window.customElements.define("vrk-star-rating", VrkStarRating);
