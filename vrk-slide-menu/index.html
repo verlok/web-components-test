@@ -5,10 +5,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Slide menu</title>
-    <style></style>
+    <style>
+      .controls {
+        text-align: right;
+      }
+    </style>
   </head>
   <body>
-    <vrk-slide-menu id="sm"></vrk-slide-menu>
+    <div class="controls">
+      <button data-action="open">Open menu</button>
+      <button data-action="close">Close menu</button>
+    </div>
+    <vrk-slide-menu id="menu"></vrk-slide-menu>
   </body>
   <script src="./vrk-slide-menu.js"></script>
+  <script>
+    const $controls = document.querySelector(".controls");
+    const $menu = document.getElementById("menu");
+    $controls.addEventListener("click", (event) => {
+      switch (event.target.dataset.action) {
+        case "open":
+          $menu.open = true;
+          break;
+        case "close":
+          $menu.open = false;
+          break;
+      }
+    });
+    $menu.addEventListener("vrk-slide-menu::opened", (event) => {
+      console.log("Menu has been opened", event);
+    });
+    $menu.addEventListener("vrk-slide-menu::closed", (event) => {
+      console.log("Menu has been closed", event);
+    });
+  </script>
 </html>

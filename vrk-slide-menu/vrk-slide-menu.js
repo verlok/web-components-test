@@ -13,9 +13,6 @@ class VrkSlideMenu extends HTMLElement {
     // HTML & CSS
     this._root.innerHTML = /*html*/ `
       <style>
-        :host {
-          
-        }
         .frame {
           position: fixed;
           top: 0; bottom: 0;
@@ -67,14 +64,36 @@ class VrkSlideMenu extends HTMLElement {
           justify-content: center;
           align-items: center;
         }
+        /* THEMES */
+        :host([theme="red"]) .title {
+          background: #E23F24;
+          color: white;
+        }
+        :host([theme="blue"]) .title {
+          background: #0D152D;
+          color: white;
+        }
+        :host([theme="red"]) .close {
+          color: white;
+        }
+        :host([theme="blue"]) .close {
+          color: white;
+        }
+        :host([backdrop="false"]) .frame.open {
+          pointer-events: none; 
+          background-color: inherit;
+        }
+        :host([backdrop="false"]) .frame.open .container {
+          pointer-events: auto;
+        }
       </style>
-      <div class="frame">
+      <div class="frame" data-action="close">
         <div class="container">
           <div class="title">
             <div class="title-content">
               Menu
             </div>
-            <button type="button" class="close">Close</button>
+            <button type="button" class="close" data-action="close">Close</button>
           </div>
           <nav class="Content">
             <a href="#/item/1">Menu item one</a>
@@ -83,26 +102,43 @@ class VrkSlideMenu extends HTMLElement {
       </div>
     `;
     // Elements cache
-    this._$ = this._root.querySelector(".");
-    this._$ = this._root.querySelector(".");
-
+    this._$frame = this._root.querySelector(".frame");
+    // Events
+    this._$frame.addEventListener("click", (event) => {
+      if (event.target.dataset.action === "close") {
+        this.open = false;
+      }
+    });
+    // Render
     this._render();
   }
   _render() {
-    if (true) {
+    if (this._$frame !== null) {
+      if (this._open) {
+        this._$frame.classList.add("open");
+        this.dispatchEvent(new CustomEvent("vrk-slide-menu::opened"));
+      } else {
+        this._$frame.classList.remove("open");
+        this.dispatchEvent(new CustomEvent("vrk-slide-menu::closed"));
+      }
     }
   }
-  set theme(value) {
+  set open(value) {
+    const booleanValue = value === true;
+    if (this._open === booleanValue) return;
+    this._open = booleanValue;
     this._render();
   }
-  get theme() {}
+  get open() {
+    return this._open;
+  }
   static get observedAttributes() {
-    return ["theme"];
+    return ["open"];
   }
   attributeChangedCallback(name, oldValue, newValue) {
     if (oldValue === newValue) return;
     switch (name) {
-      case "theme":
+      case "open":
         break;
     }
   }
