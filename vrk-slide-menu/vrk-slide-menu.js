@@ -64,10 +64,28 @@ class VrkSlideMenu extends HTMLElement {
           justify-content: center;
           align-items: center;
         }
+        .content-slot::slotted(a) {
+          display: block;
+          font-size: 1.2em;
+          text-decoration: none;
+          line-height: 2.5em;
+          padding: 0.5em;
+          border-bottom: 1px solid #f1f1f1;
+          color: #666;
+        }
+        .content-slot::slotted(a:hover) {
+          color: #000;
+        }
         /* THEMES */
+        :host([theme="red"]) .content-slot::slotted(a:hover) { 
+          color: #E23F24;
+        }
         :host([theme="red"]) .title {
           background: #E23F24;
           color: white;
+        }
+        :host([theme="blue"]) .content-slot::slotted(a:hover) { 
+          color: #0D152D;
         }
         :host([theme="blue"]) .title {
           background: #0D152D;
@@ -91,12 +109,12 @@ class VrkSlideMenu extends HTMLElement {
         <div class="container">
           <div class="title">
             <div class="title-content">
-              Menu
+              <slot name="title">Menu</slot>
             </div>
             <button type="button" class="close" data-action="close">Close</button>
           </div>
           <nav class="Content">
-            <a href="#/item/1">Menu item one</a>
+            <slot class="content-slot"></slot>
           </nav>
         </div>
       </div>
