@@ -41,7 +41,7 @@ class VrkSlideMenu extends HTMLElement {
         .title {
           display: flex;
           align-items: center;
-          font-size: 1.3rem;
+          font-size: var(--title-font-size, 1.3rem);
           background-color: #f1f1f1;
           padding: 0 1rem;
           color: #666;
