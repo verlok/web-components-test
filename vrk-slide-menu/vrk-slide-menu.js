@@ -27,8 +27,8 @@ class VrkSlideMenu extends HTMLElement {
           background-color: rgba(0, 0, 0, 0.25);
         }
         .container {
-          width: 80%;
-          max-width: 400px; background: #FFF;
+          width: var(--menu-width, 80%);
+          background: #FFF;
           height: 100%;
           transform: translateX(-100%);
           will-change: transform;
