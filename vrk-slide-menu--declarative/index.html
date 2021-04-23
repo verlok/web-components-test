@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slide menu</title>
+    <style>
+      .controls {
+        text-align: right;
+      }
+      .controls button {
+        color: white;
+        background-color: dimgray;
+      }
+      vrk-slide-menu {
+        --menu-width: 90%;
+        --title-font-size: 1.1rem;
+        --title-bg-color: #333;
+        --title-color: #eee;
+        --menu-bg-color: #eee;
+      }
+      @media (min-width: 768px) {
+        vrk-slide-menu {
+          --menu-width: 60%;
+        }
+      }
+      @media (min-width: 1200px) {
+        vrk-slide-menu {
+          --menu-width: 40%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="controls">
+      <button data-action="open">Open menu</button>
+      <button data-action="close">Close menu</button>
+    </div>
+    <vrk-slide-menu id="menu">
+      <template shadowroot="open">
+        <style>
+          .frame {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 10;
+            transition: background-color 300ms ease-in;
+          }
+          .frame.open {
+            pointer-events: auto;
+            background-color: rgba(0, 0, 0, 0.25);
+          }
+          .container {
+            width: var(--menu-width, 80%);
+            background-color: var(--menu-bg-color, #fff);
+            height: 100%;
+            transform: translateX(-100%);
+            will-change: transform;
+            transition: transform 300ms ease-in;
+            box-shadow: 1px 0 3px rgba(51, 51, 51, 0.25);
+          }
+          .frame.open .container {
+            transform: none;
+          }
+          .title {
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            font-size: var(--title-font-size, 1.3rem);
+            background-color: var(--title-bg-color, #f1f1f1);
+            color: var(--title-color, #666);
+          }
+          .title-content {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+          }
+          .close {
+            flex-basis: 5em;
+            flex-grow: 0;
+            flex-shrink: 0;
+            font-size: 1rem;
+            /*background: transparent;
+            border: 0;*/
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /*padding: 0.5rem 0.25rem;*/
+          }
+          .content-slot::slotted(a) {
+            display: block;
+            font-size: 1.2rem;
+            text-decoration: none;
+            line-height: 2.5em;
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #f1f1f1;
+            color: #666;
+          }
+          .content-slot::slotted(a:hover) {
+            color: #000;
+          }
+          /* THEMES */
+          :host([theme="red"]) .content-slot::slotted(a:hover) {
+            color: #e23f24;
+          }
+          :host([theme="red"]) .title {
+            background: #e23f24;
+            color: white;
+          }
+          :host([theme="blue"]) .content-slot::slotted(a:hover) {
+            color: #0d152d;
+          }
+          :host([theme="blue"]) .title {
+            background: #0d152d;
+            color: white;
+          }
+          :host([theme="red"]) .close {
+            color: white;
+          }
+          :host([theme="blue"]) .close {
+            color: white;
+          }
+          :host([backdrop="false"]) .frame.open {
+            pointer-events: none;
+            background-color: inherit;
+          }
+          :host([backdrop="false"]) .frame.open .container {
+            pointer-events: auto;
+          }
+        </style>
+        <div class="frame" data-action="close">
+          <div class="container">
+            <div class="title">
+              <div class="title-content">
+                <slot name="title">Menu</slot>
+              </div>
+              <button type="button" class="close" data-action="close">
+                Close
+              </button>
+            </div>
+            <nav class="Content">
+              <slot class="content-slot"></slot>
+            </nav>
+          </div>
+        </div>
+      </template>
+      <!-- LIGHT DOM! -->
+      <h3 slot="title">Nav Menu</h3>
+      <a href="#">One</a>
+      <a href="#">Two</a>
+      <a href="#">Three</a>
+    </vrk-slide-menu>
+  </body>
+  <script src="./vrk-slide-menu.js"></script>
+  <script>
+    const $controls = document.querySelector(".controls");
+    const $menu = document.getElementById("menu");
+    $controls.addEventListener("click", (event) => {
+      switch (event.target.dataset.action) {
+        case "open":
+          $menu.open = true;
+          break;
+        case "close":
+          $menu.open = false;
+          break;
+      }
+    });
+    $menu.addEventListener("vrk-slide-menu::opened", (event) => {
+      console.log("Menu has been opened", event);
+    });
+    $menu.addEventListener("vrk-slide-menu::closed", (event) => {
+      console.log("Menu has been closed", event);
+    });
+  </script>
+</html>
