@@ -157,7 +157,18 @@
       <a href="#">Three</a>
     </vrk-slide-menu>
   </body>
+  <!-- Declarative Shadow DOM Polyfill -->
+  <script>
+    document.querySelectorAll("template[shadowroot]").forEach((template) => {
+      const mode = template.getAttribute("shadowroot");
+      const shadowRoot = template.parentNode.attachShadow({ mode });
+      shadowRoot.appendChild(template.content);
+      template.remove();
+    });
+  </script>
+  <!-- Component script -->
   <script src="./vrk-slide-menu.js"></script>
+  <!-- Page controlling JS -->
   <script>
     const $controls = document.querySelector(".controls");
     const $menu = document.getElementById("menu");
