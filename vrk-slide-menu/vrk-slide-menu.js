@@ -40,36 +40,37 @@ class VrkSlideMenu extends HTMLElement {
         }
         .title {
           display: flex;
-          min-height: 3.2em;
-          font-size: 1.5em;
+          align-items: center;
+          font-size: 1.3rem;
           background-color: #f1f1f1;
+          padding: 0 1rem;
           color: #666;
         }
         .title-content {
           flex-grow: 1;
           display: flex;
           align-items: center;
-          padding-left: 1em;
+          
         }
         .close {
-          font-size: 100px;
-          flex-basis: 100px;
+          flex-basis: 5em;
           flex-grow: 0;
           flex-shrink: 0;
           font-size: 1rem;
-          background: transparent;
-          border: 0;
+          /*background: transparent;
+          border: 0;*/
           cursor: pointer;
           display: flex;
           justify-content: center;
           align-items: center;
+          /*padding: 0.5rem 0.25rem;*/
         }
         .content-slot::slotted(a) {
           display: block;
-          font-size: 1.2em;
+          font-size: 1.2rem;
           text-decoration: none;
           line-height: 2.5em;
-          padding: 0.5em;
+          padding: 0.5rem 1rem;
           border-bottom: 1px solid #f1f1f1;
           color: #666;
         }
