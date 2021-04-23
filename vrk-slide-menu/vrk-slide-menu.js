@@ -28,7 +28,7 @@ class VrkSlideMenu extends HTMLElement {
         }
         .container {
           width: var(--menu-width, 80%);
-          background: #FFF;
+          background-color: var(--menu-bg-color, #FFF);
           height: 100%;
           transform: translateX(-100%);
           will-change: transform;
@@ -41,10 +41,10 @@ class VrkSlideMenu extends HTMLElement {
         .title {
           display: flex;
           align-items: center;
-          font-size: var(--title-font-size, 1.3rem);
-          background-color: #f1f1f1;
           padding: 0 1rem;
-          color: #666;
+          font-size: var(--title-font-size, 1.3rem);
+          background-color: var(--title-bg-color, #f1f1f1);
+          color: var(--title-color, #666);
         }
         .title-content {
           flex-grow: 1;
