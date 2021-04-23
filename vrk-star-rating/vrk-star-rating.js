@@ -25,7 +25,7 @@ class VrkStarRating extends HTMLElement {
           box-sizing: border-box;
         }
         .container {
-          color: #c5c5c5;
+          color: var(--star-default-color, #c5c5c5);
           font-size: 1em;
           line-height: 1em;
           margin: 0 auto;
@@ -34,7 +34,7 @@ class VrkStarRating extends HTMLElement {
           cursor: pointer;
         }
         .top {
-          color: #e7bd06;
+          color: var(--star-selected-color, #e7bd06);
           padding: 0;
           position: absolute;
           z-index: 1;
@@ -58,7 +58,7 @@ class VrkStarRating extends HTMLElement {
         }
         .bottom > span:hover,
         .bottom > span:hover ~ span {
-          color: #e7bd06;
+          color: var(--star-hover-color, #e7bd06);
         }
       </style>
       <div class="container">
